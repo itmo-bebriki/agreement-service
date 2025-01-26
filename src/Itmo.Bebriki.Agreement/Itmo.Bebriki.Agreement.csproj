@@ -4,7 +4,6 @@
         <ProjectReference Include="..\Application\Itmo.Bebriki.Agreement.Application\Itmo.Bebriki.Agreement.Application.csproj"/>
         <ProjectReference Include="..\Infrastructure\Itmo.Bebriki.Agreement.Infrastructure.Persistence\Itmo.Bebriki.Agreement.Infrastructure.Persistence.csproj"/>
         <ProjectReference Include="..\Presentation\Itmo.Bebriki.Agreement.Presentation.Grpc\Itmo.Bebriki.Agreement.Presentation.Grpc.csproj"/>
-        <ProjectReference Include="..\Presentation\Itmo.Bebriki.Agreement.Presentation.Http\Itmo.Bebriki.Agreement.Presentation.Http.csproj" />
         <ProjectReference Include="..\Presentation\Itmo.Bebriki.Agreement.Presentation.Kafka\Itmo.Bebriki.Agreement.Presentation.Kafka.csproj"/>
     </ItemGroup>
 

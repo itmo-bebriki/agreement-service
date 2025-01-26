@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+        <ProjectReference Include="..\Itmo.Bebriki.Agreement.Application.Abstractions\Itmo.Bebriki.Agreement.Application.Abstractions.csproj" />
         <ProjectReference Include="..\Itmo.Bebriki.Agreement.Application.Models\Itmo.Bebriki.Agreement.Application.Models.csproj"/>
     </ItemGroup>
 

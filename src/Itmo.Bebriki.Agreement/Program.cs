@@ -3,7 +3,6 @@
 using Itmo.Bebriki.Agreement.Application.Extensions;
 using Itmo.Bebriki.Agreement.Infrastructure.Persistence.Extensions;
 using Itmo.Bebriki.Agreement.Presentation.Grpc.Extensions;
-using Itmo.Bebriki.Agreement.Presentation.Http.Extensions;
 using Itmo.Bebriki.Agreement.Presentation.Kafka.Extensions;
 using Itmo.Dev.Platform.Common.Extensions;
 using Itmo.Dev.Platform.Events;
@@ -27,8 +26,7 @@ builder.Services.AddPresentationGrpc();
 builder.Services.AddPresentationKafka(builder.Configuration);
 builder.Services
     .AddControllers()
-    .AddNewtonsoftJson()
-    .AddPresentationHttp();
+    .AddNewtonsoftJson();
 
 builder.Services.AddSwaggerGen().AddEndpointsApiExplorer();
 

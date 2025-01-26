@@ -1,6 +1,8 @@
+using Itmo.Bebriki.Agreement.Application.Abstractions.Persistence.Repositories;
+
 namespace Itmo.Bebriki.Agreement.Application.Abstractions.Persistence;
 
 public interface IPersistenceContext
 {
-    // TODO: add repository properties
+    IAgreementRepository AgreementRepository { get; }
 }
