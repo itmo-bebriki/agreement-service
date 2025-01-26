@@ -4,14 +4,14 @@ namespace Itmo.Bebriki.Agreement.Application.Converters.Dtos;
 
 internal static class AgreementDtoConverter
 {
-    internal static AgreementDto ToDto(Models.Agreements.Agreement agreement)
+    internal static AgreementDto ToDto(Models.Agreements.JobAgreement jobJobAgreement)
     {
         return new AgreementDto(
-            Id: agreement.Id,
-            JobTaskId: agreement.JobTaskId,
-            JobTaskState: agreement.JobTaskState,
-            AssigneeId: agreement.AssigneeId,
-            Deadline: agreement.Deadline,
-            CreatedAt: agreement.CreatedAt);
+            Id: jobJobAgreement.Id,
+            JobTaskId: jobJobAgreement.JobTaskId,
+            JobTaskState: jobJobAgreement.JobTaskState,
+            AssigneeId: jobJobAgreement.AssigneeId,
+            Deadline: jobJobAgreement.Deadline,
+            CreatedAt: jobJobAgreement.CreatedAt);
     }
 }

@@ -1,8 +1,8 @@
 namespace Itmo.Bebriki.Agreement.Application.Models.Agreements;
 
-public sealed record Agreement
+public sealed record JobAgreement
 {
-    internal Agreement() { }
+    internal JobAgreement() { }
 
     public long Id { get; init; }
 

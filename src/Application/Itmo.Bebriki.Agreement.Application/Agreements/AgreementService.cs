@@ -44,7 +44,7 @@ internal sealed class AgreementService : IAgreementService
         CancellationToken cancellationToken)
     {
         CreateAgreementContext context = AddAgreementCommandConverter.ToContext(command, _dateTimeProvider.Current);
-        Models.Agreements.Agreement agreement = AgreementFactory.CreateFromCreateContext(context);
+        Models.Agreements.JobAgreement jobJobAgreement = JobAgreementFactory.CreateFromCreateContext(context);
 
         await using IPersistenceTransaction transaction = await _transactionProvider.BeginTransactionAsync(
             IsolationLevel.ReadCommitted,
@@ -53,7 +53,7 @@ internal sealed class AgreementService : IAgreementService
         try
         {
             long agreementId = await _persistenceContext.AgreementRepository
-                .AddAsync([agreement], cancellationToken)
+                .AddAsync([jobJobAgreement], cancellationToken)
                 .FirstAsync(cancellationToken);
 
             await transaction.CommitAsync(cancellationToken);
@@ -65,10 +65,10 @@ internal sealed class AgreementService : IAgreementService
             _logger.LogError(
                 ex,
                 "Failed to create agreement. JobTaskId: {JobTaskId}, JobTaskState: {JobTaskState}, AssigneeId: {AssigneeId}, Deadline: {Deadline}",
-                agreement.JobTaskId,
-                agreement.JobTaskState,
-                agreement.AssigneeId,
-                agreement.Deadline);
+                jobJobAgreement.JobTaskId,
+                jobJobAgreement.JobTaskState,
+                jobJobAgreement.AssigneeId,
+                jobJobAgreement.Deadline);
 
             await transaction.RollbackAsync(cancellationToken);
             throw;
@@ -97,12 +97,12 @@ internal sealed class AgreementService : IAgreementService
         ApproveAgreementCommand command,
         CancellationToken cancellationToken)
     {
-        Models.Agreements.Agreement agreement =
+        Models.Agreements.JobAgreement jobJobAgreement =
             await CheckForExistingAgreementAsync(command.AgreementId, cancellationToken);
 
-        agreement = agreement with { JobTaskState = JobTaskState.Approved };
+        jobJobAgreement = jobJobAgreement with { JobTaskState = JobTaskState.Approved };
 
-        UpdateDecisionEvent updateDecisionEvent = UpdateDecisionEventConverter.ToEvent(command, agreement);
+        UpdateDecisionEvent updateDecisionEvent = UpdateDecisionEventConverter.ToEvent(command, jobJobAgreement);
 
         await using IPersistenceTransaction transaction = await _transactionProvider.BeginTransactionAsync(
             IsolationLevel.ReadCommitted,
@@ -110,7 +110,7 @@ internal sealed class AgreementService : IAgreementService
 
         try
         {
-            await _persistenceContext.AgreementRepository.UpdateAsync([agreement], cancellationToken);
+            await _persistenceContext.AgreementRepository.UpdateAsync([jobJobAgreement], cancellationToken);
 
             await _eventPublisher.PublishAsync(updateDecisionEvent, cancellationToken);
 
@@ -121,7 +121,7 @@ internal sealed class AgreementService : IAgreementService
             _logger.LogError(
                 ex,
                 "Failed to approve agreement with id: {}",
-                agreement.Id);
+                jobJobAgreement.Id);
 
             await transaction.RollbackAsync(cancellationToken);
             throw;
@@ -132,12 +132,12 @@ internal sealed class AgreementService : IAgreementService
         RejectAgreementCommand command,
         CancellationToken cancellationToken)
     {
-        Models.Agreements.Agreement agreement =
+        Models.Agreements.JobAgreement jobJobAgreement =
             await CheckForExistingAgreementAsync(command.AgreementId, cancellationToken);
 
-        agreement = agreement with { JobTaskState = JobTaskState.Rejected };
+        jobJobAgreement = jobJobAgreement with { JobTaskState = JobTaskState.Rejected };
 
-        UpdateDecisionEvent updateDecisionEvent = UpdateDecisionEventConverter.ToEvent(command, agreement);
+        UpdateDecisionEvent updateDecisionEvent = UpdateDecisionEventConverter.ToEvent(command, jobJobAgreement);
 
         await using IPersistenceTransaction transaction = await _transactionProvider.BeginTransactionAsync(
             IsolationLevel.ReadCommitted,
@@ -145,7 +145,7 @@ internal sealed class AgreementService : IAgreementService
 
         try
         {
-            await _persistenceContext.AgreementRepository.UpdateAsync([agreement], cancellationToken);
+            await _persistenceContext.AgreementRepository.UpdateAsync([jobJobAgreement], cancellationToken);
 
             await _eventPublisher.PublishAsync(updateDecisionEvent, cancellationToken);
 
@@ -156,14 +156,14 @@ internal sealed class AgreementService : IAgreementService
             _logger.LogError(
                 ex,
                 "Failed to approve agreement with id: {}",
-                agreement.Id);
+                jobJobAgreement.Id);
 
             await transaction.RollbackAsync(cancellationToken);
             throw;
         }
     }
 
-    private async Task<Models.Agreements.Agreement> CheckForExistingAgreementAsync(
+    private async Task<Models.Agreements.JobAgreement> CheckForExistingAgreementAsync(
         long agreementId,
         CancellationToken cancellationToken)
     {
@@ -171,7 +171,7 @@ internal sealed class AgreementService : IAgreementService
             .WithAgreementId(agreementId)
             .WithPageSize(1));
 
-        Models.Agreements.Agreement? agreement = await _persistenceContext.AgreementRepository
+        Models.Agreements.JobAgreement? agreement = await _persistenceContext.AgreementRepository
             .QueryAsync(agreementQuery, cancellationToken)
             .SingleOrDefaultAsync(cancellationToken);
 

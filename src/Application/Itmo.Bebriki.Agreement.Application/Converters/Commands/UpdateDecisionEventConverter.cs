@@ -6,21 +6,21 @@ namespace Itmo.Bebriki.Agreement.Application.Converters.Commands;
 
 internal static class UpdateDecisionEventConverter
 {
-    internal static UpdateDecisionEvent ToEvent(RejectAgreementCommand command, Models.Agreements.Agreement agreement)
+    internal static UpdateDecisionEvent ToEvent(RejectAgreementCommand command, Models.Agreements.JobAgreement jobJobAgreement)
     {
         return new UpdateDecisionEvent(
-            agreement.JobTaskId,
+            jobJobAgreement.JobTaskId,
             JobTaskState.Rejected,
             null,
             null);
     }
 
-    internal static UpdateDecisionEvent ToEvent(ApproveAgreementCommand command, Models.Agreements.Agreement agreement)
+    internal static UpdateDecisionEvent ToEvent(ApproveAgreementCommand command, Models.Agreements.JobAgreement jobJobAgreement)
     {
         return new UpdateDecisionEvent(
-            agreement.JobTaskId,
+            jobJobAgreement.JobTaskId,
             JobTaskState.Approved,
-            agreement.AssigneeId,
-            agreement.Deadline);
+            jobJobAgreement.AssigneeId,
+            jobJobAgreement.Deadline);
     }
 }

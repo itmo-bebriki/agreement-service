@@ -4,15 +4,15 @@ namespace Itmo.Bebriki.Agreement.Application.Abstractions.Persistence.Repositori
 
 public interface IAgreementRepository
 {
-    IAsyncEnumerable<Models.Agreements.Agreement> QueryAsync(
+    IAsyncEnumerable<Models.Agreements.JobAgreement> QueryAsync(
         AgreementQuery query,
         CancellationToken cancellationToken);
 
     IAsyncEnumerable<long> AddAsync(
-        IReadOnlyCollection<Models.Agreements.Agreement> agreements,
+        IReadOnlyCollection<Models.Agreements.JobAgreement> agreements,
         CancellationToken cancellationToken);
 
     Task UpdateAsync(
-        IReadOnlyCollection<Models.Agreements.Agreement> agreements,
+        IReadOnlyCollection<Models.Agreements.JobAgreement> agreements,
         CancellationToken cancellationToken);
 }

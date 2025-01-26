@@ -2,9 +2,9 @@ using Itmo.Bebriki.Agreement.Application.Models.Agreements.Contexts;
 
 namespace Itmo.Bebriki.Agreement.Application.Models.Agreements;
 
-public static class AgreementFactory
+public static class JobAgreementFactory
 {
-    public static Agreement CreateNew(
+    public static JobAgreement CreateNew(
         long id,
         long jobTaskId,
         JobTaskState state,
@@ -12,7 +12,7 @@ public static class AgreementFactory
         DateTimeOffset? deadline,
         DateTimeOffset createdAt)
     {
-        return new Agreement
+        return new JobAgreement
         {
             Id = id,
             JobTaskId = jobTaskId,
@@ -23,9 +23,9 @@ public static class AgreementFactory
         };
     }
 
-    public static Agreement CreateFromCreateContext(CreateAgreementContext context)
+    public static JobAgreement CreateFromCreateContext(CreateAgreementContext context)
     {
-        return new Agreement
+        return new JobAgreement
         {
             JobTaskId = context.JobTaskId,
             JobTaskState = context.JobTaskState,
