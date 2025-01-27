@@ -1,0 +1,18 @@
+name: "itmo-bebriki-agreement-service"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: agreement-service-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5438:5432"
+    restart: unless-stopped
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
