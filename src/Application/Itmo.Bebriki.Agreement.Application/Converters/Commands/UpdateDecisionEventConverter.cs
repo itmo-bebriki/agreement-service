@@ -6,7 +6,7 @@ namespace Itmo.Bebriki.Agreement.Application.Converters.Commands;
 
 internal static class UpdateDecisionEventConverter
 {
-    internal static UpdateDecisionEvent ToEvent(RejectAgreementCommand command, Models.Agreements.JobAgreement jobJobAgreement)
+    internal static UpdateDecisionEvent ToEvent(RejectAgreementCommand command, JobAgreement jobJobAgreement)
     {
         return new UpdateDecisionEvent(
             jobJobAgreement.JobTaskId,
@@ -15,7 +15,7 @@ internal static class UpdateDecisionEventConverter
             null);
     }
 
-    internal static UpdateDecisionEvent ToEvent(ApproveAgreementCommand command, Models.Agreements.JobAgreement jobJobAgreement)
+    internal static UpdateDecisionEvent ToEvent(ApproveAgreementCommand command, JobAgreement jobJobAgreement)
     {
         return new UpdateDecisionEvent(
             jobJobAgreement.JobTaskId,

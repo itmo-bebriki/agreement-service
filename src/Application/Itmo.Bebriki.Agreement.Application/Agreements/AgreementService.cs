@@ -44,7 +44,7 @@ internal sealed class AgreementService : IAgreementService
         CancellationToken cancellationToken)
     {
         CreateAgreementContext context = AddAgreementCommandConverter.ToContext(command, _dateTimeProvider.Current);
-        Models.Agreements.JobAgreement jobJobAgreement = JobAgreementFactory.CreateFromCreateContext(context);
+        JobAgreement agreement = JobAgreementFactory.CreateFromCreateContext(context);
 
         await using IPersistenceTransaction transaction = await _transactionProvider.BeginTransactionAsync(
             IsolationLevel.ReadCommitted,
@@ -53,7 +53,7 @@ internal sealed class AgreementService : IAgreementService
         try
         {
             long agreementId = await _persistenceContext.AgreementRepository
-                .AddAsync([jobJobAgreement], cancellationToken)
+                .AddAsync([agreement], cancellationToken)
                 .FirstAsync(cancellationToken);
 
             await transaction.CommitAsync(cancellationToken);
@@ -65,10 +65,10 @@ internal sealed class AgreementService : IAgreementService
             _logger.LogError(
                 ex,
                 "Failed to create agreement. JobTaskId: {JobTaskId}, JobTaskState: {JobTaskState}, AssigneeId: {AssigneeId}, Deadline: {Deadline}",
-                jobJobAgreement.JobTaskId,
-                jobJobAgreement.JobTaskState,
-                jobJobAgreement.AssigneeId,
-                jobJobAgreement.Deadline);
+                agreement.JobTaskId,
+                agreement.JobTaskState,
+                agreement.AssigneeId,
+                agreement.Deadline);
 
             await transaction.RollbackAsync(cancellationToken);
             throw;
@@ -97,7 +97,7 @@ internal sealed class AgreementService : IAgreementService
         ApproveAgreementCommand command,
         CancellationToken cancellationToken)
     {
-        Models.Agreements.JobAgreement jobJobAgreement =
+        JobAgreement jobJobAgreement =
             await CheckForExistingAgreementAsync(command.AgreementId, cancellationToken);
 
         jobJobAgreement = jobJobAgreement with { JobTaskState = JobTaskState.Approved };
@@ -132,7 +132,7 @@ internal sealed class AgreementService : IAgreementService
         RejectAgreementCommand command,
         CancellationToken cancellationToken)
     {
-        Models.Agreements.JobAgreement jobJobAgreement =
+        JobAgreement jobJobAgreement =
             await CheckForExistingAgreementAsync(command.AgreementId, cancellationToken);
 
         jobJobAgreement = jobJobAgreement with { JobTaskState = JobTaskState.Rejected };
@@ -163,7 +163,7 @@ internal sealed class AgreementService : IAgreementService
         }
     }
 
-    private async Task<Models.Agreements.JobAgreement> CheckForExistingAgreementAsync(
+    private async Task<JobAgreement> CheckForExistingAgreementAsync(
         long agreementId,
         CancellationToken cancellationToken)
     {
@@ -171,7 +171,7 @@ internal sealed class AgreementService : IAgreementService
             .WithAgreementId(agreementId)
             .WithPageSize(1));
 
-        Models.Agreements.JobAgreement? agreement = await _persistenceContext.AgreementRepository
+        JobAgreement? agreement = await _persistenceContext.AgreementRepository
             .QueryAsync(agreementQuery, cancellationToken)
             .SingleOrDefaultAsync(cancellationToken);
 
