@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <Compile Update="Agreements\JobAgreementFactory.cs">
+      <DependentUpon>JobAgreement.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

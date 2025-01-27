@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\Itmo.Bebriki.Agreement.Application.Abstractions\Itmo.Bebriki.Agreement.Application.Abstractions.csproj"/>
+        <ProjectReference Include="..\Itmo.Bebriki.Agreement.Application.Contracts\Itmo.Bebriki.Agreement.Application.Contracts.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Itmo.Dev.Platform.Persistence.Postgres" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
+    </ItemGroup>
+
+</Project>
