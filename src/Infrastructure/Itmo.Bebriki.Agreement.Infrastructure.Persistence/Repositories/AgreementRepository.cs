@@ -65,8 +65,8 @@ internal sealed class AgreementRepository : IAgreementRepository
                 id: reader.GetInt64("agreement_id"),
                 jobTaskId: reader.GetInt64("job_task_id"),
                 state: reader.GetFieldValue<JobTaskState>("state"),
-                assigneeId: reader.GetInt64("assignee_id"),
-                deadline: reader.GetFieldValue<DateTimeOffset>("dead_line"),
+                assigneeId: reader.GetFieldValue<long?>("assignee_id"),
+                deadline: reader.GetFieldValue<DateTimeOffset?>("dead_line"),
                 createdAt: reader.GetFieldValue<DateTimeOffset>("created_at"));
         }
     }

@@ -4,7 +4,7 @@ using Itmo.Dev.Platform.Persistence.Postgres.Migrations;
 namespace Itmo.Bebriki.Agreement.Infrastructure.Persistence.Migrations;
 
 #pragma warning disable SA1649
-[Migration(20250127170800, "table agreements")]
+[Migration(20250127170801, "table agreements")]
 public sealed class TableAgreementsMigration : SqlMigration
 {
     protected override string GetUpSql(IServiceProvider serviceProvider)
